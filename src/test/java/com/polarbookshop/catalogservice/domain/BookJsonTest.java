@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.controller;
+package com.polarbookshop.catalogservice.domain;
 
 import com.polarbookshop.catalogservice.domain.entity.Book;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class BookJsonTest {
     
     @Test
     protected void testSerialize() throws Exception {
-        var book = new Book("1234567890", "Title", "Author", 9.99);
+        var book = Book.of("1234567890", "Title", "Author", 9.99, "Publisher");
         var jsonContent = json.write(book);
         assertThat(jsonContent)
                 .extractingJsonPathStringValue("@.isbn")
@@ -27,6 +27,8 @@ public class BookJsonTest {
                 .extractingJsonPathStringValue("@.author").isEqualTo(book.author());
         assertThat(jsonContent)
                 .extractingJsonPathNumberValue("@.price").isEqualTo(book.price());
+        assertThat(jsonContent)
+                .extractingJsonPathStringValue("@.publisher").isEqualTo(book.publisher());
     }
     
     @Test
@@ -36,12 +38,13 @@ public class BookJsonTest {
                     "isbn": "1234567890",
                     "title": "Title",
                     "author": "Author",
-                    "price": 9.99
+                    "price": 9.99,
+                    "publisher": "Publisher"
                 }
                 """;
         assertThat(json.parse(content))
                 .usingRecursiveComparison()
-                .isEqualTo(new Book("1234567890", "Title", "Author", 9.99));
+                .isEqualTo(Book.of("1234567890", "Title", "Author", 9.99, "Publisher"));
     }
     
 }

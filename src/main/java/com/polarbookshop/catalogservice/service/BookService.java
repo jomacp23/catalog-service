@@ -28,7 +28,7 @@ public class BookService {
     }
     
     public Book addBookToCatalog(Book book) {
-        if (bookRepository.existByIsbn(book.isbn())) {
+        if (bookRepository.existsByIsbn(book.isbn())) {
             throw new BookAlreadyExistsException(book.isbn());
         }
         return bookRepository.save(book);
@@ -43,10 +43,15 @@ public class BookService {
                 .findByIsbn(isbn)
                 .map(existingBook -> {
                     var bookToUpdate = new Book(
+                            existingBook.id(),
                             existingBook.isbn(),
                             book.title(),
                             book.author(),
-                            book.price()
+                            book.price(),
+                            book.publisher(),
+                            existingBook.createDate(),
+                            existingBook.lastModifiedDate(),
+                            existingBook.version()
                     );
                     return bookRepository.save(bookToUpdate);
                 })
