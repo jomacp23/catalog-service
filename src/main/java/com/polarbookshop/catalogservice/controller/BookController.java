@@ -43,6 +43,7 @@ public class BookController {
     
     //Delete a book with the given ISBN
     @DeleteMapping("{isbn}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String isbn) {
         bookService.removeBookFromCatalog(isbn);
     }
