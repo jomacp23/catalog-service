@@ -17,7 +17,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<test-containers.version>1.17.3</test-containers.version>
-		<module.image.name>${artifactId}</module.image.name>
+		<module.image.name>${artifactId}:${version}</module.image.name>
 	</properties>
 
 	<dependencyManagement>
